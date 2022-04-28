@@ -70,7 +70,7 @@ app.post("/getAccessToken00", (req, res) => {
     var options = {
       method: 'POST',
 //       url: 'https://zoom.us/oauth/token?grant_type=client_credentials',
-        url: `https://zoom.us/oauth/token?grant_type=authorization_code&code=${req.body.code}&redirect_uri=${encodeURIComponent(process.env.redirectURL)}`;
+        url: `https://zoom.us/oauth/token?grant_type=authorization_code&code=${req.body.code}&redirect_uri=${encodeURIComponent(process.env.redirectURL)}`,
       headers: {
         /**The credential below is a sample base64 encoded credential. Replace it with "Authorization: 'Basic ' + Buffer.from(your_app_client_id + ':' + your_app_client_secret).toString('base64')"
         **/
