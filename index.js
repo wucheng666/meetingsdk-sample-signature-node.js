@@ -52,7 +52,7 @@ app.post('/demo', (req, res) => {
 
 app.post("/getAccessToken", (req, res) => {
     // Request an access token using the auth code
-    let url = `https://zoom.us/oauth/token?grant_type=authorization_code&code=${req.body.code}&redirect_uri=${process.env.redirectURL}`;
+    let url = `https://zoom.us/oauth/token?grant_type=authorization_code&code=${req.body.code}&redirect_uri=${encodeURIComponent(process.env.redirectURL)}`;
   
 
     request
@@ -95,14 +95,14 @@ app.get("/getAccessToken2", (req, res) => {
         'Basic QlV2N3huX0RUblN2Q1p6M2FnYUhuQTpzVjF3QkY5UWpabTIwUFVBc0h5eGJMa2JlazVRN0RUaw==',
       'Content-Type': 'application/x-www-form-urlencoded'
     }
-    console.log("url:", url)
+    console.log("url11:", url)
     // console.log("url2:", options)
  
-      const params = {grant_type: 'authorization_code', code: req.query.code, redirect_uri: process.env.redirectURL }
+      const params = {grant_type: 'authorization_code', code: req.query.code, redirect_uri: encodeURIComponent(process.env.redirectURL) }
       const data = Object.keys(params).map((key) => `${key}=${params[key]}`).join('&');
       const options = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': `Basic Sk9HX3IwOERTdHFxdE5OUWhMcExnOjc3aFpNNGVJUnNodXdrYXhxckZWVWlVaWt1Yk02bUdN`,'Accept': '*/*', },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': `Basic Sk9HX3IwOERTdHFxdE5OUWhMcExnOjc3aFpNNGVJUnNodXdrYXhxckZWVWlVaWt1Yk02bUdN` },
         data,
         url: baseUrl,
       };
@@ -130,8 +130,36 @@ app.get("/getAccessToken2", (req, res) => {
         //   })
         // })
       }).catch(function (error) {
+        console.log("2error:",error)
         res.status(400).json({message: error});
       });
+  
+})
+
+
+
+app.get("/getAccessToken3", (req, res) => {
+  
+  const clientId = process.env.ZOOM_SDK_KEY;
+  const clientSecret = process.env.ZOOM_SDK_SECRET;
+  const decodedString = `${clientId}:${clientSecret}`;
+  // const authString = btoa(decodedString);
+  const authString = Buffer.from(decodedString).toString('base64');
+  // console.log({ authString });
+  const url = `https://zoom.us/oauth/token?grant_type=authorization_code&code=${req.query.code}&redirect_uri=${process.env.redirectURL}`;
+  const reqConfig = {
+    headers: {
+      Authorization: `Basic ${authString}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+
+  // to zoom server to get token and refresh token
+  const zoomRes = axios.post(url, {}, reqConfig).then(function (response) {
+        console.log("axios...res:", response)
+        const tokenData = response.data
+        res.status(200).json(tokenData);
+  })
   
 })
 
