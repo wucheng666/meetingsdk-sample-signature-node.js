@@ -66,6 +66,31 @@ app.post('/demo', (req, res) => {
   })
 })
 
+app.post("/getAccessToken00", (req, res) => {
+    var options = {
+      method: 'POST',
+//       url: 'https://zoom.us/oauth/token?grant_type=client_credentials',
+        url: `https://zoom.us/oauth/token?grant_type=authorization_code&code=${req.body.code}&redirect_uri=${encodeURIComponent(process.env.redirectURL)}`;
+      headers: {
+        /**The credential below is a sample base64 encoded credential. Replace it with "Authorization: 'Basic ' + Buffer.from(your_app_client_id + ':' + your_app_client_secret).toString('base64')"
+        **/
+           Authorization:
+        'Basic QlV2N3huX0RUblN2Q1p6M2FnYUhuQTpzVjF3QkY5UWpabTIwUFVBc0h5eGJMa2JlazVRN0RUaw==',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    };
+
+      request(options, function(error, response, body) {
+       if (error) throw new Error(error);
+
+       console.log(body);
+    
+        res.json({
+          response: body,
+        });
+      });
+})
+
 app.post("/getAccessToken0", (req, res) => {
   cors(req, res, () => {
     // Request an access token using the auth code
