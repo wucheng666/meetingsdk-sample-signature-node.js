@@ -98,7 +98,7 @@ app.get("/getAccessToken2", (req, res) => {
     console.log("url:", url)
     // console.log("url2:", options)
  
-      const params = {grant_type: 'authorization_code', code, redirect_uri: process.env.redirectURL }
+      const params = {grant_type: 'authorization_code', code: req.query.code, redirect_uri: process.env.redirectURL }
       const data = Object.keys(params).map((key) => `${key}=${params[key]}`).join('&');
       const options = {
         method: 'POST',
