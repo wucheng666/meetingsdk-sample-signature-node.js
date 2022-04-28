@@ -34,7 +34,8 @@ app.post('/', (req, res) => {
 
   res.json({
     signature: signature,
-    body: req.body
+    body: req.body,
+    oPayload: oPayload
   })
 })
 
