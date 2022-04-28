@@ -41,7 +41,8 @@ app.post('/demo', (req, res) => {
 
  
   res.json({
-    demo: "demo success"
+    demo: "demo success",
+    body: req.body
   })
 })
 
