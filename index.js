@@ -86,4 +86,54 @@ app.post("/getAccessToken", (req, res) => {
 //       .auth(process.env.ZOOM_SDK_KEY, process.env.ZOOM_SDK_SECRET);
 });
 
+
+app.get("/getAccessToken2", (req, res) => {
+  // Request an access token using the auth code
+
+    const baseUrl = "https://zoom.us/oauth/token"
+    const url = baseUrl +`?grant_type=authorization_code&code=${req.query.code}&redirect_uri=${process.env.redirectURL}`
+
+    const headers = {
+      Authorization:
+        'Basic QlV2N3huX0RUblN2Q1p6M2FnYUhuQTpzVjF3QkY5UWpabTIwUFVBc0h5eGJMa2JlazVRN0RUaw==',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+    console.log("url:", url)
+    // console.log("url2:", options)
+
+      const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': `Basic Sk9HX3IwOERTdHFxdE5OUWhMcExnOjc3aFpNNGVJUnNodXdrYXhxckZWVWlVaWt1Yk02bUdN`,'Accept': '*/*', },
+        // data,
+        url: url,
+      };
+
+      axios(options).then(function (response) {
+        console.log("axios...res:", response)
+        const tokenData = response.data
+        res.status(200).json(tokenData)
+        // verifyUserInfo(tokenData.access_token).then(response=>{
+        //   let {name, accounts} = response.data
+        //   let data = {
+        //     ...tokenData,
+        //     name,
+        //     ...accounts[0]
+        //   }
+        //   let databaseRef = admin.database().ref('/')
+        //   let childRef = databaseRef.push()
+        //   childRef.set(data).then(()=>{
+        //     res.status(200).json({
+        //       auth_id: childRef.key
+        //       /*...tokenData,
+        //       name,
+        //       ...accounts[0]*/
+        //     })
+        //   })
+        // })
+      }).catch(function (error) {
+        res.status(400).json({message: error});
+      });
+  
+})
+
 app.listen(port, () => console.log(`Zoom Meeting SDK Sample Signature Node.js on port ${port}!`))
