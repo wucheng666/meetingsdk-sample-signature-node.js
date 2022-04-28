@@ -37,6 +37,13 @@ app.post('/', (req, res) => {
   })
 })
 
+app.post('/demo', (req, res) => {
+
+ 
+  res.json({
+    demo: "demo success"
+  })
+})
 
 app.post("/getAccessToken", (req, res) => {
     // Request an access token using the auth code
