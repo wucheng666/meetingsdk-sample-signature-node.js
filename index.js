@@ -38,11 +38,11 @@ app.post('/', (req, res) => {
 })
 
 
-app.get("/getAccessToken", (req, res) => {
+app.post("/getAccessToken", (req, res) => {
     // Request an access token using the auth code
     let url =
       "https://zoom.us/oauth/token?grant_type=authorization_code&code=" +
-      req.query.code +
+      req.body.code +
       "&redirect_uri=" +
       process.env.redirectURL;
 
