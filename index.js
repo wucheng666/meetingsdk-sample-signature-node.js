@@ -54,6 +54,7 @@ app.post("/getAccessToken", (req, res) => {
       process.env.redirectURL;
   res.json({
           response: url,
+          body: req.body,
         });
 
 //     request
