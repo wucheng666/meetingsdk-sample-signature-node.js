@@ -52,15 +52,16 @@ app.post("/getAccessToken", (req, res) => {
     // Request an access token using the auth code
     let url = `https://zoom.us/oauth/token?grant_type=authorization_code&code=${req.body.code}&redirect_uri=${process.env.redirectURL}`;
   
+
+    request
+      .post(url, (error, response, body) => {
+        console.log(error);
+        console.log(body);
+      
   res.json({
         response: url,
-        body: 123
+        body: body
       });
-
-//     request
-//       .post(url, (error, response, body) => {
-//         console.log(error);
-//         console.log(body);
 
 //         // Parse response to JSON
 //         body = JSON.parse(body);
@@ -81,8 +82,8 @@ app.post("/getAccessToken", (req, res) => {
 //         } else {
 //           // Handle errors, something's gone wrong!
 //         }
-//       })
-//       .auth(process.env.ZOOM_SDK_KEY, process.env.ZOOM_SDK_SECRET);
+      })
+      .auth(process.env.ZOOM_SDK_KEY, process.env.ZOOM_SDK_SECRET);
 });
 
 app.listen(port, () => console.log(`Zoom Meeting SDK Sample Signature Node.js on port ${port}!`))
