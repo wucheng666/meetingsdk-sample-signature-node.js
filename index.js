@@ -33,7 +33,8 @@ app.post('/', (req, res) => {
   const signature = KJUR.jws.JWS.sign('HS256', sHeader, sPayload, process.env.ZOOM_SDK_SECRET)
 
   res.json({
-    signature: signature
+    signature: signature,
+    body: req.body
   })
 })
 
