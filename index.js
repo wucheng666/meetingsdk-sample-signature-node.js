@@ -83,7 +83,7 @@ app.post("/getAccessToken", (req, res) => {
 //           // Handle errors, something's gone wrong!
 //         }
       })
-      .auth(process.env.ZOOM_SDK_KEY, process.env.ZOOM_SDK_SECRET);
+//       .auth(process.env.ZOOM_SDK_KEY, process.env.ZOOM_SDK_SECRET);
 });
 
 app.listen(port, () => console.log(`Zoom Meeting SDK Sample Signature Node.js on port ${port}!`))
