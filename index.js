@@ -155,7 +155,7 @@ app.get("/getAccessToken3", (req, res) => {
   };
 
   // to zoom server to get token and refresh token
-  const zoomRes = axios.post(url, {}, reqConfig).then(function (response) {
+  axios.post(url, {}, reqConfig).then(function (response) {
         console.log("axios...res:", response)
         const tokenData = response.data
         res.status(200).json(tokenData);
