@@ -37,4 +37,41 @@ app.post('/', (req, res) => {
   })
 })
 
+
+app.get("/getAccessToken", (req, res) => {
+    // Request an access token using the auth code
+    let url =
+      "https://zoom.us/oauth/token?grant_type=authorization_code&code=" +
+      req.query.code +
+      "&redirect_uri=" +
+      process.env.redirectURL;
+
+    request
+      .post(url, (error, response, body) => {
+        console.log(error);
+        console.log(body);
+
+        // Parse response to JSON
+        body = JSON.parse(body);
+
+        // Logs your access and refresh tokens in the browser
+        console.log(`access_token: ${body.access_token}`);
+        console.log(`refresh_token: ${body.refresh_token}`);
+
+        res.json({
+          response: body,
+        });
+        if (body.access_token) {
+          // Step 4:
+          // We can now use the access token to authenticate API calls
+          // Send a request to get your user information using the /me context
+          // The `/me` context restricts an API call to the user the token belongs to
+          // This helps make calls to user-specific endpoints instead of storing the userID
+        } else {
+          // Handle errors, something's gone wrong!
+        }
+      })
+      .auth(process.env.clientID, process.env.clientSecret);
+});
+
 app.listen(port, () => console.log(`Zoom Meeting SDK Sample Signature Node.js on port ${port}!`))
