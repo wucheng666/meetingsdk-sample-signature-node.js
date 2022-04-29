@@ -84,6 +84,7 @@ app.post("/getAccessToken00", (req, res) => {
        if (error) throw new Error(error);
 
        console.log(body);
+        body = body && JSON.parse(body);
     
         res.json({
           response: body,
