@@ -66,9 +66,10 @@ app.post("/createMeeting", (req, res) => {
       method: 'POST',
       url: `https://api.zoom.us/v2/users/${userId}/meetings`,
       headers: {
-           Authorization: `Bearer ${accessToken}`
+         Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
       },
-      body:params,
+      body: params,
       json: true
     };
        console.log("options:",options)
