@@ -73,6 +73,7 @@ app.post("/createMeeting", (req, res) => {
        console.log("options:",options)
 
       request(options, function(error, response, body) {
+       console.log("error:",error);
        console.log("response:",response);
        console.log("body:",body);
           
