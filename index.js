@@ -57,6 +57,29 @@ app.post('/', (req, res) => {
   })
 })
 
+app.post("/createMeeting", (req, res) => {
+    const params = req.body.opts;
+    const userId = req.body.userId;
+    const accessToken = req.body.accessToken;
+    
+    var options = {
+      method: 'POST',
+      url: `https://api.zoom.us/v2/users/${userId}/meetings`,
+      headers: {
+           Authorization: `Bearer ${accessToken}`
+      },
+      body:params
+    };
+
+      request(options, function(error, response, body) {
+       if (error) throw new Error(error);
+
+        body = body && JSON.parse(body);
+    
+        res.json(body);
+      });
+})
+
 app.post('/demo', (req, res) => {
 
  
