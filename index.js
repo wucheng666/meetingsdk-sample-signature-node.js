@@ -68,7 +68,8 @@ app.post("/createMeeting", (req, res) => {
       headers: {
            Authorization: `Bearer ${accessToken}`
       },
-      body:params
+      body:params,
+      json: true
     };
        console.log("options:",options)
 
