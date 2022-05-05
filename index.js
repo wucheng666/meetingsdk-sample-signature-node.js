@@ -70,11 +70,13 @@ app.post("/createMeeting", (req, res) => {
       },
       body:params
     };
+       console.log("options:",options)
 
       request(options, function(error, response, body) {
+       console.log("response:",response);
+       console.log("body:",body);
+          
        if (error) throw new Error(error);
-       console.log("response:",response)
-       console.log("body:",body)
 
         //body = body && JSON.parse(body);
     
